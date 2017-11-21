@@ -1,4 +1,6 @@
 .vscode/
-data/
 share_data/
 .DS_Store
+*.swp
+*/data/log/log.txt
+*/data/config/leveldb
