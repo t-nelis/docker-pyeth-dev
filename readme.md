@@ -1,4 +1,16 @@
-## pyethapp development environment containers
+# pyethapp development environment containers
+Get multiple pyethapp nodes running in no time!
+
+## Dependencies
+- `docker`
+- `docker-compose`
+
+## Setup
+- Run `docker-compose build`
+- Run `docker-compose up`
+- Done!
+
+-----
 
 This is a simple containized private network for `pyethapp` development with Docker Compose. It helps for:
 
@@ -87,17 +99,6 @@ make rebuild-miner-all
     ```sh
     make run-miner
     ```
-
-## Testing Python2
-### 1. Build Python2 image
-```sh
-make setup27
-```
-
-### 2. Comment out the miner-py27 container in `docker-compose.yml` and then rebuild
-```sh
-docker-compose up -d
-```
 
 ## Reference
 * [konradkonrad/docker-pyeth-cluster: pyethapp private cluster with docker-compose](https://github.com/konradkonrad/docker-pyeth-cluster)

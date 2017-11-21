@@ -1,0 +1,54 @@
+version: "2"
+services:
+  bootstrap:
+    container_name: bootstrap
+    build: "./bootstrap"
+    image: localethereum/pyethapp-bootstrap
+    ports:
+      - 40002:30303
+      - 40002:30303/udp
+      - 41002:8545
+    restart: always
+    networks:
+      back:
+          ipv4_address: 172.18.250.2
+    volumes:
+      - ./share_data:/ethereum
+  validator:
+    container_name: validator
+    build: "./validator"
+    image: localethereum/pyethapp-validator
+    ports:
+      - 40003:30303
+      - 40003:30303/udp
+      - 41003:8545
+    restart: always
+    networks:
+      back:
+          ipv4_address: 172.18.250.3
+    volumes:
+      - ./share_data:/ethereum
+  miner:
+    container_name: miner
+    build: "./miner"
+    image: localethereum/pyethapp-miner
+    ports:
+      - 40004:30303
+      - 40004:30303/udp
+      - 41004:8545
+    restart: always
+    networks:
+      back:
+          ipv4_address: 172.18.250.4
+    volumes:
+      - ./share_data:/ethereum
+networks:
+  back:
+    driver: bridge
+    driver_opts:
+      com.docker.network.enable_ipv6: "false"
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.18.250.0/24
+        gateway: 172.18.250.1
