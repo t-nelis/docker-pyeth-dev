@@ -16,6 +16,8 @@ services:
     container_name: validator
     build: "./validator"
     image: localethereum/pyethapp-validator
+    environment:
+      - BOOTSTRAP_NODE=enode://d3260a710a752b926bb3328ebe29bfb568e4fb3b4c7ff59450738661113fb21f5efbdf42904c706a9f152275890840345a5bc990745919eeb2dfc2c481d778ee@172.18.250.2:30303
     ports:
       - 40003:30303
       - 40003:30303/udp
@@ -28,6 +30,8 @@ services:
     container_name: miner
     build: "./miner"
     image: localethereum/pyethapp-miner
+    environment:
+      - BOOTSTRAP_NODE=enode://d3260a710a752b926bb3328ebe29bfb568e4fb3b4c7ff59450738661113fb21f5efbdf42904c706a9f152275890840345a5bc990745919eeb2dfc2c481d778ee@172.18.250.2:30303
     ports:
       - 40004:30303
       - 40004:30303/udp
