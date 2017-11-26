@@ -1,4 +1,4 @@
-version: "2"
+version: "3"
 services:
   bootstrap:
     container_name: bootstrap
@@ -13,7 +13,8 @@ services:
       back:
           ipv4_address: 172.18.250.2
     volumes:
-      - ./share_data:/ethereum
+      - ./shared_data/pyethapp:/ethereum/pyethapp
+      - ./shared_data/pyethereum:/ethereum/pyethereum
   validator:
     container_name: validator
     build: "./validator"
@@ -27,7 +28,8 @@ services:
       back:
           ipv4_address: 172.18.250.3
     volumes:
-      - ./share_data:/ethereum
+      - ./shared_data/pyethapp:/ethereum/pyethapp
+      - ./shared_data/pyethereum:/ethereum/pyethereum
   miner:
     container_name: miner
     build: "./miner"
@@ -41,7 +43,8 @@ services:
       back:
           ipv4_address: 172.18.250.4
     volumes:
-      - ./share_data:/ethereum
+      - ./shared_data/pyethapp:/ethereum/pyethapp
+      - ./shared_data/pyethereum:/ethereum/pyethereum
 networks:
   back:
     driver: bridge
@@ -51,4 +54,3 @@ networks:
       driver: default
       config:
       - subnet: 172.18.250.0/24
-        gateway: 172.18.250.1
