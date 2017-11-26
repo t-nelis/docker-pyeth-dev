@@ -1,4 +1,4 @@
-version: "2"
+version: "3"
 services:
   bootstrap:
     container_name: bootstrap
@@ -45,4 +45,3 @@ networks:
       driver: default
       config:
       - subnet: 172.18.250.0/24
-        gateway: 172.18.250.1
