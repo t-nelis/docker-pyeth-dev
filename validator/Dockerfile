@@ -20,6 +20,7 @@ RUN ln -sf /usr/local/bin/pip3.6 /usr/local/bin/pip \
     && ln -sf /usr/bin/python3.6 /usr/local/bin/python \
     && pip install -U pip
 RUN pip install coincurve==6.0.0
+RUN pip install web3
 
 # Clone and install (editable) required repositories
 RUN mkdir /ethereum
@@ -34,6 +35,7 @@ RUN cd pyethereum && python setup.py develop
 COPY data/config /root/.config/pyethapp
 COPY data/log /root/log
 COPY start.sh /root/
+COPY faucet.py /root/
 EXPOSE 30303
 EXPOSE 30303/udp
 EXPOSE 8545
