@@ -7,6 +7,13 @@ init-config:
 	sh start.sh
 	cp docker-compose.default.yml docker-compose.yml
 
+build-pyethapp:
+	docker build -t ethresearch/pyethapp ./pyethapp
+
+push-pyethapp:
+	docker login
+	docker push ethresearch/pyethapp
+
 init-source:
 	mkdir shared_data
 	test -d ./shared_data/pydevp2p || git clone https://github.com/ethereum/pydevp2p.git --branch develop ./shared_data/pydevp2p
