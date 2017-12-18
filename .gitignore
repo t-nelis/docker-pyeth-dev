@@ -4,3 +4,4 @@ shared_data/*
 *.swp
 */data/log/log.txt
 */data/config/leveldb
+keystore/
