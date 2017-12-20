@@ -9,4 +9,4 @@ perl -pi -e "s/PRIVKEY/$PRIVKEY/" /root/.config/pyethapp/config.yaml
 echo "Creating new account"
 /usr/local/bin/pyethapp --password /root/.config/pyethapp/password.txt account new
 echo "Launching node"
-/usr/local/bin/pyethapp -m 50 -l :info,eth:debug,pow:debug --log-file /root/log/log.txt -b $BOOTSTRAP_NODE run 
+/usr/local/bin/pyethapp -m 50 -l eth.chain:info,eth.chainservice:info,eth.validator:info --log-file /root/log/log.txt -b $BOOTSTRAP_NODE run
