@@ -5,4 +5,4 @@ shared_data/*
 */data/log/log.txt
 */data/config/leveldb
 validator/data/config/password.txt
-validator/data/keystore
+validator/data/config/keystore
