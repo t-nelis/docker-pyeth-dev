@@ -22,3 +22,8 @@ endif
 
 	@echo "\n🌟 New address created at $(keystore_path)\n"
 	ls $(keystore_path)
+
+run-validator:
+	docker-compose build validator
+	docker run -d --name validator localethereum/pyethapp-validator
+	docker logs -f validator
