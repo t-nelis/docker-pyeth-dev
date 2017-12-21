@@ -9,7 +9,7 @@ new-account:
 ifeq ($(wildcard $(pwd_path)),)
 	@read -s -p "🌟 Enter a new password to encrypt your account:" pwd; \
 	echo "$$pwd" > $(pwd_path)
-	@echo "\n🌟 Your password stored at $(pwd_path)\n"
+	@echo "\n🌟 Your password is stored at $(pwd_path)\n"
 else
 	@echo "\n🌟 Will encrypt your account with $(pwd_path)"
 endif
@@ -22,6 +22,8 @@ endif
 
 	@echo "\n🌟 New address created at $(keystore_path)\n"
 	ls $(keystore_path)
+
+	@echo "\n🚰 You can get some test ether at http://faucet.ethereumresearch.org/ 😃"
 
 run-validator:
 	docker-compose build validator
