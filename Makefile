@@ -1,49 +1,31 @@
-setup:
-	docker build -t localethereum/pyethapp-dev .
-setup27:
-	docker build -f Dockerfile-py27 -t localethereum/pyethapp-dev27 .
 
-init-config:
-	sh start.sh
-	cp docker-compose.default.yml docker-compose.yml
+current_dir = $(shell pwd)
+keystore_path := ./validator/data/config/keystore
+pwd_path := ./validator/data/config/password.txt
 
-build-pyethapp:
-	docker build -t ethresearch/pyethapp ./pyethapp
+new-account:
+	@echo "\n🌟 Creating keystore directory at $(keystore_path)\n"
+	mkdir -p $(keystore_path)
+ifeq ($(wildcard $(pwd_path)),)
+	@read -s -p "🌟 Enter a new password to encrypt your account:" pwd; \
+	echo "$$pwd" > $(pwd_path)
+	@echo "\n🌟 Your password is stored at $(pwd_path)\n"
+else
+	@echo "\n🌟 Will encrypt your account with $(pwd_path)"
+endif
 
-push-pyethapp:
-	docker login
-	docker push ethresearch/pyethapp
+	@echo "\n🌟 Pyethapp container is creating new address for you, might take few seconds:\n"
+	docker run -it --rm \
+	-v $(current_dir)/validator/data/config:/root/.config/pyethapp \
+	ethresearch/pyethapp-research:devel \
+	pyethapp --password /root/.config/pyethapp/password.txt account new
 
-init-source:
-	mkdir shared_data
-	test -d ./shared_data/pydevp2p || git clone https://github.com/ethereum/pydevp2p.git --branch develop ./shared_data/pydevp2p
-	test -d ./shared_data/pyethapp || git clone https://github.com/ethereum/pyethapp.git --branch develop ./shared_data/pyethapp
-	test -d ./shared_data/pyethereum || git clone https://github.com/ethereum/pyethereum.git --branch develop ./shared_data/pyethereum
-	test -d ./shared_data/sharding || git clone https://github.com/ethereum/sharding.git --branch develop ./shared_data/sharding
-	cd ./shared_data/pyethereum && git submodule init && git submodule update --recursive
+	@echo "\n🌟 New address created at $(keystore_path)\n"
+	ls $(keystore_path)
 
-rebuild-boot-all:
-	docker exec bootstrap bash -c "cd /pyeth/pydevp2p && python setup.py install"
-	docker exec bootstrap bash -c "cd /pyeth/pyethereum && python setup.py install"
-	docker exec bootstrap bash -c "cd /pyeth/sharding && pip install -r requirements.txt"
-	docker exec bootstrap bash -c "cd /pyeth/pyethapp && python setup.py install"
-rebuild-miner-all:
-	docker exec miner bash -c "cd /pyeth/pydevp2p && python setup.py install"
-	docker exec miner bash -c "cd /pyeth/pyethereum && python setup.py install"
-	docker exec miner bash -c "cd /pyeth/sharding && pip install -r requirements.txt"
-	docker exec miner bash -c "cd /pyeth/pyethapp && python setup.py install"
-rebuild-miner27-all:
-	docker exec miner-py27 bash -c "cd /pyeth/pydevp2p && python setup.py install"
-	docker exec miner-py27 bash -c "cd /pyeth/pyethereum && python setup.py install"
-	docker exec miner-py27 bash -c "cd /pyeth/sharding && pip install -r requirements.txt"
-	docker exec miner-py27 bash -c "cd /pyeth/pyethapp && python setup.py install"
+	@echo "\n🚰 You can get some test ether at http://faucet.ethereumresearch.org/ 😃"
 
-run-boot:
-	docker exec bootstrap bash -c "pyethapp --password /root/.config/pyethapp/password.txt -l :info,eth:debug,pow:debug  --log-file /root/log/log.txt run &"
-run-miner:
-	docker exec miner bash -c "pyethapp -m 50 --password /root/.config/pyethapp/password.txt -l :info,eth:debug,pow:debug --log-file  /root/log/log.txt run &"
-
-clear-boot:
-	docker exec bootstrap bash -c "rm -r /root/.config/pyethapp/leveldb/"
-clear-miner:
-	docker exec miner bash -c "rm -r /root/.config/pyethapp/leveldb/"
+run-validator:
+	docker-compose build validator
+	docker run -d --name validator localethereum/pyethapp-validator
+	docker logs -f validator

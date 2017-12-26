@@ -4,3 +4,5 @@ shared_data/*
 *.swp
 */data/log/log.txt
 */data/config/leveldb
+validator/data/config/password.txt
+validator/data/config/keystore
