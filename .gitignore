@@ -2,7 +2,4 @@
 shared_data/*
 .DS_Store
 *.swp
-*/data/log/log.txt
-*/data/config/leveldb
-validator/data/config/password.txt
-validator/data/config/keystore
+*/data/
