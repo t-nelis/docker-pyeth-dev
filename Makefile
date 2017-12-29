@@ -16,6 +16,7 @@ endif
 	@echo "\n🌟 Pyethapp container is creating new address for you, might take few seconds:\n"
 	docker run -it --rm \
 	-v $(current_dir)/validator/data/config:/root/.config/pyethapp \
+	-v $(current_dir)/validator/data/log:/root/log \
 	ethresearch/pyethapp-research:devel \
 	pyethapp --password /root/.config/pyethapp/password.txt account new
 
