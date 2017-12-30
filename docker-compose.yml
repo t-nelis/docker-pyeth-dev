@@ -31,12 +31,16 @@ services:
   #         ipv4_address: 172.18.250.3
   miner:
     container_name: miner
-    build: "./miner"
+    build: "./validator"
     image: localethereum/pyethapp-miner
     environment:
       - BOOTSTRAP_NODE=enode://d3260a710a752b926bb3328ebe29bfb568e4fb3b4c7ff59450738661113fb21f5efbdf42904c706a9f152275890840345a5bc990745919eeb2dfc2c481d778ee@172.18.250.2:30303
       - MINE_PERCENT=50
       - SLEEPTIME=1
+    command: pyethapp -m 50 --password /root/.config/pyethapp/password.txt -l eth.chain:info,eth.chainservice:info,eth.validator:info --log-file /root/log/log.txt -b enode://d3260a710a752b926bb3328ebe29bfb568e4fb3b4c7ff59450738661113fb21f5efbdf42904c706a9f152275890840345a5bc990745919eeb2dfc2c481d778ee@172.18.250.2:30303 run
+    volumes:
+      - ./validator/data/config:/root/.config/pyethapp
+      - ./validator/data/log:/root/log
     ports:
       - 40004:30303
       - 40004:30303/udp
