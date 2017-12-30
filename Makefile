@@ -14,10 +14,11 @@ else
 endif
 
 	@echo "\n🌟 Pyethapp container is creating new address for you, might take few seconds:\n"
+	docker build ./validator -t casper-validator
 	docker run -it --rm \
 	-v $(current_dir)/validator/data/config:/root/.config/pyethapp \
 	-v $(current_dir)/validator/data/log:/root/log \
-	ethresearch/pyethapp-research:devel \
+	casper-validator \
 	pyethapp --password /root/.config/pyethapp/password.txt account new
 
 	@echo "\n🌟 New address created at $(keystore_path)\n"
@@ -30,10 +31,11 @@ bootstrap_node?=enode://d3260a710a752b926bb3328ebe29bfb568e4fb3b4c7ff59450738661
 bootstrap_uri?=http://54.167.247.63:8545
 rpc_port?=8545
 devp2p_port?=30303
-# Node names
+# Docker names
 validator_name?=validator
 miner_name?=miner
 bootstrap_name?=bootstrap
+network_name?=dockerpyethdev_back
 
 run-validator:
 	docker build ./validator -t casper-validator
@@ -42,6 +44,7 @@ run-validator:
 		-e BOOTSTRAP_NODE="${bootstrap_node}" -e BOOTSTRAP_NODE_URI="${bootstrap_uri}" \
 		-v $(current_dir)/validator/data/config:/root/.config/pyethapp \
 		-v $(current_dir)/validator/data/log:/root/log \
+		--network=$(network_name) \
 		casper-validator
 	docker logs -f ${validator_name}
 
