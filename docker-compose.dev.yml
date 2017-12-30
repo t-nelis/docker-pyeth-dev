@@ -4,10 +4,10 @@ services:
     volumes:
       - ./shared_data/pyethapp:/ethereum/pyethapp
       - ./shared_data/pyethereum:/ethereum/pyethereum
-  validator:
-    volumes:
-      - ./shared_data/pyethapp:/ethereum/pyethapp
-      - ./shared_data/pyethereum:/ethereum/pyethereum
+  # validator:
+  #   volumes:
+  #     - ./shared_data/pyethapp:/ethereum/pyethapp
+  #     - ./shared_data/pyethereum:/ethereum/pyethereum
   miner:
     volumes:
       - ./shared_data/pyethapp:/ethereum/pyethapp

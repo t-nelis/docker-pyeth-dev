@@ -1,6 +1,5 @@
 FROM ethresearch/pyethapp
 
-
 COPY default_data/config /root/.config/pyethapp
 COPY filebeat.yml /etc/filebeat/filebeat.yml
 RUN chmod go-w /etc/filebeat/filebeat.yml

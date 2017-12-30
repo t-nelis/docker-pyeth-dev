@@ -9,5 +9,5 @@ perl -pi -e "s/PRIVKEY/$PRIVKEY/" /root/.config/pyethapp/config.yaml
 echo "Creating new account"
 /usr/local/bin/pyethapp --password /root/.config/pyethapp/password.txt account new
 sleep $SLEEPTIME
-echo "Launching node with mine amt: $MINE_AMT"
-/usr/local/bin/pyethapp -m $MINE_AMT -l eth.chain:info,eth.chainservice:info,eth.validator:info --log-file /root/log/log.txt -b $BOOTSTRAP_NODE run
+echo "Launching node with mine amt: $MINE_PERCENT"
+/usr/local/bin/pyethapp -m $MINE_PERCENT -l eth.chain:info,eth.chainservice:info,eth.validator:info --log-file /root/log/log.txt -b $BOOTSTRAP_NODE run

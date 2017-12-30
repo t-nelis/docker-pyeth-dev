@@ -41,6 +41,7 @@ run-validator:
 		-p ${rpc_port}:8545 -p ${devp2p_port}:30303 -p ${devp2p_port}:30303/udp \
 		-e BOOTSTRAP_NODE="${bootstrap_node}" -e BOOTSTRAP_NODE_URI="${bootstrap_uri}" \
 		-v $(current_dir)/validator/data/config:/root/.config/pyethapp \
+		-v $(current_dir)/validator/data/log:/root/log \
 		casper-validator
 	docker logs -f ${validator_name}
 

@@ -12,30 +12,30 @@ services:
     networks:
       back:
           ipv4_address: 172.18.250.2
-  validator:
-    container_name: validator
-    build: "./validator"
-    image: localethereum/pyethapp-validator
-    environment:
-      - BOOTSTRAP_NODE=enode://d3260a710a752b926bb3328ebe29bfb568e4fb3b4c7ff59450738661113fb21f5efbdf42904c706a9f152275890840345a5bc990745919eeb2dfc2c481d778ee@172.18.250.2:30303
-      - BOOTSTRAP_NODE_URI=http://172.18.250.2:8545
-      - FAUCET_PRIVKEY=87f97f6a4d97ab0d26c2949fb6456bc3961e339502be389cb284aa0b67f8b2bf
-      - SLEEPTIME=30
-    ports:
-      - 40003:30303
-      - 40003:30303/udp
-      - 41003:8545
-    restart: always
-    networks:
-      back:
-          ipv4_address: 172.18.250.3
+  # validator:
+  #   container_name: validator
+  #   build: "./validator"
+  #   image: localethereum/pyethapp-validator
+  #   environment:
+  #     - BOOTSTRAP_NODE=enode://d3260a710a752b926bb3328ebe29bfb568e4fb3b4c7ff59450738661113fb21f5efbdf42904c706a9f152275890840345a5bc990745919eeb2dfc2c481d778ee@172.18.250.2:30303
+  #     - BOOTSTRAP_NODE_URI=http://172.18.250.2:8545
+  #     - FAUCET_PRIVKEY=87f97f6a4d97ab0d26c2949fb6456bc3961e339502be389cb284aa0b67f8b2bf
+  #     - SLEEPTIME=30
+  #   ports:
+  #     - 40003:30303
+  #     - 40003:30303/udp
+  #     - 41003:8545
+  #   restart: always
+  #   networks:
+  #     back:
+  #         ipv4_address: 172.18.250.3
   miner:
     container_name: miner
     build: "./miner"
     image: localethereum/pyethapp-miner
     environment:
       - BOOTSTRAP_NODE=enode://d3260a710a752b926bb3328ebe29bfb568e4fb3b4c7ff59450738661113fb21f5efbdf42904c706a9f152275890840345a5bc990745919eeb2dfc2c481d778ee@172.18.250.2:30303
-      - MINE_AMT=50
+      - MINE_PERCENT=50
       - SLEEPTIME=1
     ports:
       - 40004:30303
@@ -45,39 +45,6 @@ services:
     networks:
       back:
           ipv4_address: 172.18.250.4
-  validator2:
-    container_name: validator2
-    build: "./validator"
-    image: localethereum/pyethapp-validator
-    environment:
-      - BOOTSTRAP_NODE=enode://d3260a710a752b926bb3328ebe29bfb568e4fb3b4c7ff59450738661113fb21f5efbdf42904c706a9f152275890840345a5bc990745919eeb2dfc2c481d778ee@172.18.250.2:30303
-      - BOOTSTRAP_NODE_URI=http://172.18.250.2:8545
-      - FAUCET_PRIVKEY=87f97f6a4d97ab0d26c2949fb6456bc3961e339502be389cb284aa0b67f8b2bf
-      - SLEEPTIME=30
-    ports:
-      - 40005:30303
-      - 40005:30303/udp
-      - 41005:8545
-    restart: always
-    networks:
-      back:
-          ipv4_address: 172.18.250.5
-  miner2:
-    container_name: miner2
-    build: "./miner"
-    image: localethereum/pyethapp-miner
-    environment:
-      - BOOTSTRAP_NODE=enode://d3260a710a752b926bb3328ebe29bfb568e4fb3b4c7ff59450738661113fb21f5efbdf42904c706a9f152275890840345a5bc990745919eeb2dfc2c481d778ee@172.18.250.2:30303
-      - SLEEPTIME=10
-      - MINE_AMT=20
-    ports:
-      - 40006:30303
-      - 40006:30303/udp
-      - 41006:8545
-    restart: always
-    networks:
-      back:
-          ipv4_address: 172.18.250.6
 networks:
   back:
     driver: bridge
