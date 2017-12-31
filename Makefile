@@ -24,8 +24,6 @@ endif
 	@echo "\n🌟 New address created at $(keystore_path)\n"
 	ls $(keystore_path)
 
-	@echo "\n🚰 You can get some test ether at http://faucet.ethereumresearch.org/ 😃"
-
 # Defaults
 bootstrap_node?=enode://d3260a710a752b926bb3328ebe29bfb568e4fb3b4c7ff59450738661113fb21f5efbdf42904c706a9f152275890840345a5bc990745919eeb2dfc2c481d778ee@54.167.247.63:30303
 bootstrap_uri?=http://54.167.247.63:8545
@@ -37,6 +35,9 @@ validator_name?=validator
 ifneq ($(strip $(deposit)),)
 _deposit=--deposit ${deposit}
 endif
+ifeq ($(validate),true)
+_validate=--validate
+endif
 ifeq ($(logout),true)
 _logout=--logout
 endif
@@ -45,13 +46,13 @@ ifneq ($(strip $(network_name)),)
 network=--network ${network_name}
 endif
 
-run-validator:
+run-node:
 	docker build ./validator -t casper-validator
-	@echo "\n🌟 Starting pyethapp! Happy validating!🌟\n"
+	@echo "\n🌟👻 Starting node! 👻🌟\n"
 	docker run -it --name ${validator_name} \
 		-v $(current_dir)/validator/data/config:/root/.config/pyethapp \
 		-v $(current_dir)/validator/data/log:/root/log \
 		${network} \
 		casper-validator \
-		pyethapp -m ${mine_percent} --unlock ${account} --validate ${account} ${_deposit} ${_logout} --password /root/.config/pyethapp/password.txt -l ${log_config} --log-file /root/log/log.txt -b ${bootstrap_node} run
+		pyethapp -m ${mine_percent} --unlock ${account} ${_validate} ${account} ${_deposit} ${_logout} --password /root/.config/pyethapp/password.txt -l ${log_config} --log-file /root/log/log.txt -b ${bootstrap_node} run
 	docker logs -f ${validator_name}
