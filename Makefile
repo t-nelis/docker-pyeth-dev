@@ -31,6 +31,7 @@ bootstrap_node?=enode://d3260a710a752b926bb3328ebe29bfb568e4fb3b4c7ff59450738661
 bootstrap_uri?=http://54.167.247.63:8545
 log_config?=eth.chain:info,eth.chainservice:info,eth.validator:info
 account?=1
+mine_percent?=0
 validator_name?=validator
 # Deposit and logout commands if given
 ifneq ($(strip $(deposit)),)
@@ -50,10 +51,7 @@ run-validator:
 	docker run -it --name ${validator_name} \
 		-v $(current_dir)/validator/data/config:/root/.config/pyethapp \
 		-v $(current_dir)/validator/data/log:/root/log \
-    -v $(current_dir)/shared_data/pyethapp:/ethereum/pyethapp \
-    -v $(current_dir)/shared_data/pyethereum:/ethereum/pyethereum \
-    -v $(current_dir)/shared_data/viper:/ethereum/viper \
 		${network} \
 		casper-validator \
-		pyethapp -m 0 --unlock ${account} --validate ${account} ${_deposit} ${_logout} --password /root/.config/pyethapp/password.txt -l ${log_config} --log-file /root/log/log.txt -b ${bootstrap_node} run
+		pyethapp -m ${mine_percent} --unlock ${account} --validate ${account} ${_deposit} ${_logout} --password /root/.config/pyethapp/password.txt -l ${log_config} --log-file /root/log/log.txt -b ${bootstrap_node} run
 	docker logs -f ${validator_name}
