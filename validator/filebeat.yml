@@ -3,7 +3,7 @@ filebeat.prospectors:
   enabled: true
   paths:
     - /root/log/*
-  exclude_lines: ["^INFO", "WARNING"]
+  exclude_lines: ["^INFO", "WARNING", "TRACE", "DEBUG"]
 
 # Filebeat modules
 filebeat.config.modules:
@@ -13,4 +13,4 @@ filebeat.config.modules:
 
 # Logstash
 output.logstash:
-  hosts: ["54.210.166.201:5000"]
+  hosts: ["54.210.221.136:5000"]
