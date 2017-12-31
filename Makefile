@@ -3,7 +3,7 @@ keystore_path := ./validator/data/config/keystore
 pwd_path := ./validator/data/config/password.txt
 
 new-account:
-	bash ./script/new-account.sh $(keystore_path) $(pwd_path) $(current_dir)
+	bash ./utils/new-account.sh $(keystore_path) $(pwd_path) $(current_dir)
 
 # Defaults
 bootstrap_node?=enode://d3260a710a752b926bb3328ebe29bfb568e4fb3b4c7ff59450738661113fb21f5efbdf42904c706a9f152275890840345a5bc990745919eeb2dfc2c481d778ee@54.167.247.63:30303
