@@ -6,10 +6,10 @@ import rlp
 
 print('Generating faucet tx')
 
-faucetPrivkey = '87f97f6a4d97ab0d26c2949fb6456bc3961e339502be389cb284aa0b67f8b2bf'
+faucetPrivkey = sys.argv[1]
 faucetAddress = encode_hex(privtoaddr(faucetPrivkey))
-recipAddress = sys.argv[1]
-provider_uri = 'http://' + sys.argv[2] + ':8545'
+recipAddress = sys.argv[2]
+provider_uri = 'http://' + sys.argv[3] + ':8545'
 
 web3 = Web3(HTTPProvider(provider_uri))
 
