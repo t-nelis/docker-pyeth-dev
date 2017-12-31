@@ -2,11 +2,11 @@
 This repository provides Docker containers for setting up a local Casper testnet as well
 as connecting to remote testnets.
 
-## Dependencies
+# Dependencies
 - `docker`
 - `docker-compose`
 
-## Sync Public Testnet
+# Sync Public Testnet
 To sync with a public testnet, you will need to:
 
 1. Clone this repository, 
@@ -31,7 +31,7 @@ feel free to copy and paste it into `./validator/data/config/keystore`.
 
 #### Note that your account keystore, blockchain, and logs are all stored in `./validator/data`
 
-### Starting a Miner
+## Running a Miner
 At first, you will have no ETH so you may wish to spend some time mining. To do this simply run your node
 with `mine_percent` as any number `1-100`. `mine_percent` specifies the percentage of your CPU you want to
 dedicate to mining. For instance, to start a miner using half your CPU you can run:
@@ -39,14 +39,14 @@ dedicate to mining. For instance, to start a miner using half your CPU you can r
 $ make run-node mine_percent=50 bootstrap_node=enode://[NODE_PUB_KEY]@[NODE_IP_ADDR]:30303
 ```
 
-### Starting a Validator
+## Running a Validator
 Once you have more ETH than the minimum accepted deposit size (currently set to `1500 ETH`), deposit your ETH and
 start validating. For instance, your command may look something like:
 ```bash
 $ make run-node validate=true deposit=1501 bootstrap_node=enode://[NODE_PUB_KEY]@[NODE_IP_ADDR]:30303
 ```
 
-### Logging out and Withdrawing your ETH
+## Logging out and Withdrawing your ETH
 If you would like to no longer validate and withdraw your ETH + rewards, you can logout. Note that logging out and 
 withdrawing is not instant and will take at least two epochs. If you would like to logout, stop your validator and
 then run the following command:
@@ -58,7 +58,7 @@ successfully logged out and submitted a withdrawl transaction. You can also use 
 balance has updated to include your deposit plus your hard earned validation rewards.
 
 
-## Setup Local Testnet
+# Setup Local Testnet
 First start up the default bootstrap node & miner with:
 ```
 $ docker-compose build
