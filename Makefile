@@ -36,7 +36,7 @@ ifneq ($(strip $(deposit)),)
 _deposit=--deposit ${deposit}
 endif
 ifeq ($(validate),true)
-_validate=--validate
+_validate=--validate ${account}
 endif
 ifeq ($(logout),true)
 _logout=--logout
@@ -54,5 +54,5 @@ run-node:
 		-v $(current_dir)/validator/data/log:/root/log \
 		${network} \
 		casper-validator \
-		pyethapp -m ${mine_percent} --unlock ${account} ${_validate} ${account} ${_deposit} ${_logout} --password /root/.config/pyethapp/password.txt -l ${log_config} --log-file /root/log/log.txt -b ${bootstrap_node} run
+		pyethapp -m ${mine_percent} --unlock ${account} ${_validate} ${_deposit} ${_logout} --password /root/.config/pyethapp/password.txt -l ${log_config} --log-file /root/log/log.txt -b ${bootstrap_node} run
 	docker logs -f ${validator_name}
