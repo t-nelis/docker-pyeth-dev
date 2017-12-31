@@ -4,6 +4,7 @@ services:
     volumes:
       - ./shared_data/pyethapp:/ethereum/pyethapp
       - ./shared_data/pyethereum:/ethereum/pyethereum
+      - ./shared_data/viper:/ethereum/viper
   # validator:
   #   volumes:
   #     - ./shared_data/pyethapp:/ethereum/pyethapp
@@ -12,3 +13,4 @@ services:
     volumes:
       - ./shared_data/pyethapp:/ethereum/pyethapp
       - ./shared_data/pyethereum:/ethereum/pyethereum
+      - ./shared_data/viper:/ethereum/viper
