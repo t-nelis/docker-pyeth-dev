@@ -11,7 +11,9 @@ To sync with a public testnet, you will need to:
 
 1. Clone this repository, 
 2. Create or import your keystore, and
-3. Start your node!
+3. Start your node! You will need to provide a `bootstrap_node` of the form `enode://[NODE_PUB_KEY]@[NODE_IP_ADDR]:30303`.
+The `NODE_PUB_KEY` is your bootstrap node's public key found in the `config.yaml`, and `NODE_IP_ADDR` is its IP address.
+
 
 ```bash
 $ git clone git@github.com:karlfloersch/docker-pyeth-dev.git
@@ -27,9 +29,10 @@ $ make run-node bootstrap_node=enode://[NODE_PUB_KEY]@[NODE_IP_ADDR]:30303
 ```
 
 In the above example we created a new account. However, if you have a keystore you would like to use
-feel free to copy and paste it into `./validator/data/config/keystore`.
+feel free to copy and paste it into `./validator/data/config/keystore`. Note that your account keystore, blockchain, and logs are all stored in `./validator/data`
 
-#### Note that your account keystore, blockchain, and logs are all stored in `./validator/data`
+#### To connect to our current public testnet, you can use: 
+```bootstrap_node=enode://d3260a710a752b926bb3328ebe29bfb568e4fb3b4c7ff59450738661113fb21f5efbdf42904c706a9f152275890840345a5bc990745919eeb2dfc2c481d778ee@54.167.247.63:30303```
 
 ## Running a Miner
 At first, you will have no ETH so you may wish to spend some time mining. To do this simply run your node
