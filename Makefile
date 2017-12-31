@@ -29,40 +29,31 @@ endif
 # Defaults
 bootstrap_node?=enode://d3260a710a752b926bb3328ebe29bfb568e4fb3b4c7ff59450738661113fb21f5efbdf42904c706a9f152275890840345a5bc990745919eeb2dfc2c481d778ee@54.167.247.63:30303
 bootstrap_uri?=http://54.167.247.63:8545
-rpc_port?=8545
-devp2p_port?=30303
-# Docker names
+log_config?=eth.chain:info,eth.chainservice:info,eth.validator:info
+account?=1
 validator_name?=validator
-miner_name?=miner
-bootstrap_name?=bootstrap
-network_name?=dockerpyethdev_back
+# Deposit and logout commands if given
+ifneq ($(strip $(deposit)),)
+_deposit=--deposit ${deposit}
+endif
+ifeq ($(logout),true)
+_logout=--logout
+endif
+# Join network if given
+ifneq ($(strip $(network_name)),)
+network=--network ${network_name}
+endif
 
 run-validator:
 	docker build ./validator -t casper-validator
-	docker run -d --name ${validator_name} \
-		-p ${rpc_port}:8545 -p ${devp2p_port}:30303 -p ${devp2p_port}:30303/udp \
-		-e BOOTSTRAP_NODE="${bootstrap_node}" -e BOOTSTRAP_NODE_URI="${bootstrap_uri}" \
+	@echo "\n🌟 Starting pyethapp! Happy validating!🌟\n"
+	docker run -it --name ${validator_name} \
 		-v $(current_dir)/validator/data/config:/root/.config/pyethapp \
 		-v $(current_dir)/validator/data/log:/root/log \
-		--network=$(network_name) \
-		casper-validator
+    -v $(current_dir)/shared_data/pyethapp:/ethereum/pyethapp \
+    -v $(current_dir)/shared_data/pyethereum:/ethereum/pyethereum \
+    -v $(current_dir)/shared_data/viper:/ethereum/viper \
+		${network} \
+		casper-validator \
+		pyethapp -m 0 --unlock ${account} --validate ${account} ${_deposit} ${_logout} --password /root/.config/pyethapp/password.txt -l ${log_config} --log-file /root/log/log.txt -b ${bootstrap_node} run
 	docker logs -f ${validator_name}
-
-logout-validator:
-	docker build ./validator -t casper-validator
-	# TODO: Fix this up
-
-run-miner:
-	docker build ./miner -t casper-miner
-	docker run -d --name ${miner_name} \
-		-p ${rpc_port}:8545 -p ${devp2p_port}:30303 -p ${devp2p_port}:30303/udp \
-		-e BOOTSTRAP_NODE="${bootstrap_node}" -e BOOTSTRAP_NODE_URI="${bootstrap_uri}" \
-		casper-miner
-	docker logs -f ${miner_name}
-
-run-bootstrap:
-	docker build ./bootstrap -t casper-bootstrap
-	docker run -d --name ${bootstrap_name} \
-		-p ${rpc_port}:8545 -p ${devp2p_port}:30303 -p ${devp2p_port}:30303/udp \
-		casper-bootstrap
-	docker logs -f ${bootstrap_name}
