@@ -3,7 +3,7 @@ filebeat.prospectors:
   enabled: true
   paths:
     - /root/log/*
-  exclude_lines: ["^INFO", "WARNING", "TRACE", "DEBUG"]
+  exclude_lines: ["^.*?(INFO)", "^.*?(WARNING)", "^.*?(TRACE)", "^.*?(DEBUG)"]
 
 # Filebeat modules
 filebeat.config.modules:
