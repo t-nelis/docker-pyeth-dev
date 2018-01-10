@@ -18,7 +18,7 @@ The `NODE_PUB_KEY` is your bootstrap node's public key found in the `config.yaml
 ```bash
 $ git clone git@github.com:karlfloersch/docker-pyeth-dev.git
 $ cd docker-pyeth-dev
-$ make new-acccount
+$ make new-account
 🌟 Creating keystore directory at ./validator/data/config/keystore
 mkdir -p ./validator/data/config/keystore
 🌟 Enter a new password to encrypt your account:
