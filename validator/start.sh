@@ -14,4 +14,4 @@ else
   echo "Initialized new validator config"
 fi
 echo "Running command: $@"
-$@
+exec $@
